@@ -177,7 +177,7 @@ console.log("\n=== Exercicio 7: Contagem de Nós ===");
 console.log("Numero de nos na lista:", countNodes(head)); // 4
 
 // ------------------------------------------------------------
-// Analises extras solicitadas nos enunciados
+// Analises extras de complexidade para cada exercicio
 // ------------------------------------------------------------
 console.log("\n--- Analises de Complexidade ---");
 console.log("1. Fatorial: O(n) tempo, O(n) espaco");
