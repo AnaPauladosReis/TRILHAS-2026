@@ -1,0 +1,209 @@
+//Aluna: Ana Paula dos Reis
+//Trilha: MySQL
+//Ano: 2026
+//∘₊✧──────✧₊∘
+
+1. Explique o que é o MySQL e cite ao menos três de suas vantagens.
+O que é:
+MySQL é um Sistema de Gerenciamento de Banco de Dados Relacional (SGBD) de código aberto. Ele organiza os dados em tabelas que podem se relacionar entre si, usando a linguagem SQL (Structured Query Language) para consultas.
+
+Três vantagens:
+
+Gratuito e com código aberto – Você pode baixar, usar e modificar sem custos de licença. Ótimo para começar a aprender ou para projetos pessoais/empresariais que querem economizar.
+
+Alta performance e escalabilidade – Consegue lidar com grandes volumes de dados e muitas conexões simultâneas, sendo usado por gigantes como Facebook, Twitter e YouTube.
+
+Segurança robusta – Possui sistema de controle de acesso baseado em usuários, criptografia de conexão (SSL/TLS) e auditoria. Você pode dar privilégios bem granulares (por tabela, coluna, etc.).
+
+Armadilha comum: Achar que por ser gratuito ele é frágil ou limitado. Muitas empresas grandes o usam em produção.
+
+//∘₊✧──────✧₊∘
+
+2. Qual a diferença entre um banco de dados relacional e um banco de dados não relacional? Dê exemplos práticos de uso.
++------------------------------------------------------------------------------------------+
+|                       COMPARAÇÃO DE BANCOS DE DADOS                                      |
++------------------------------------------------------------------------------------------+
+|      CARACTERÍSTICA      |       RELACIONAL (SQL)        |    NÃO RELACIONAL (NoSQL)     |
++--------------------------+-------------------------------+-------------------------------+
+|                          | • Tabelas (linhas/colunas)    | • Documentos (JSON), Grafos   |
+|        ESTRUTURA         | • Esquema rígido              | • Chave-valor, Colunas        |
+|                          |                               | • Esquema flexível            |
++--------------------------+-------------------------------+-------------------------------+
+|                          |                               | • Embedding ou referências    |
+|     RELACIONAMENTOS      | • Chaves estrangeiras, Joins  | • Menos Joins                 |
+|                          |                               |                               |
++--------------------------+-------------------------------+-------------------------------+
+|                          | • ACID                        | • BASE                        |
+|       PROPRIEDADES       |   (Atomicidade, Consistência, |   (Basic Availability, Soft-  |
+|                          |    Isolamento, Durabilidade)  |    state, Eventual Consist.)  |
++--------------------------+-------------------------------+-------------------------------+
+|                          | • Dados estruturados          | • Grandes volumes de dados    |
+|       QUANDO USAR        | • Transações financeiras      | • Dados semi-estruturados     |
+|                          | • Relatórios complexos        | • Escalabilidade horizontal   |
++--------------------------+-------------------------------+-------------------------------+
+Exemplos práticos:
+
+Relacional (MySQL): Sistema bancário, ERP, controle de estoque – precisam de integridade referencial e transações.
+
+Não relacional (MongoDB): Catálogo de produtos com atributos variados; logs de aplicações; rede social (armazenar posts e comentários aninhados).
+
+Armadilha: Usar NoSQL achando que é sempre mais rápido. Para consultas com muitos joins, o relacional ainda é rei.
+
+//∘₊✧──────✧₊∘
+
+3. Cite e explique os principais componentes da arquitetura do MySQL.
+A arquitetura do MySQL é dividida em camadas:
+
+Camada de Conexão (Connection Pool) – Gerencia as conexões dos clientes (aplicações, ferramentas, terminal). Autentica usuários, mantém threads, aloca memória.
+
+Camada de Serviços (SQL Layer) – Recebe os comandos SQL, faz parsing (análise sintática), otimização (escolhe o melhor plano de execução) e execução. Inclui o cache de consultas (descontinuado no MySQL 8.0).
+
+Camada de Motores de Armazenamento (Storage Engines) – Responsável por ler/escrever dados no disco, gerenciar índices, transações, bloqueios. Ex: InnoDB (padrão), MyISAM, Memory.
+
+Gerenciador de Transações e Logs – Registra mudanças (redo log, undo log) para garantir durabilidade e recuperação após falhas.
+
+Buffer Pool – Área de memória que armazena páginas de dados e índices para acesso rápido (principal componente de desempenho).
+
+Armadilha: Pensar que o MySQL é um monolito único. Você pode trocar o motor de armazenamento por tabela, conforme a necessidade.
+
+//∘₊✧──────✧₊∘
+
+4. Qual a função do motor de armazenamento do MySQL? Explique a diferença entre InnoDB e MyISAM.
+Função do motor de armazenamento:
+Ele é o componente que faz a interface entre a camada SQL e o sistema de arquivos. Decide como os dados são armazenados, indexados, bloqueados (locks), e se suporta transações, chaves estrangeiras, etc.
+
+Diferenças entre InnoDB e MyISAM (tabela comparativa):
++------------------------------------------------------------------------------------------+
+|                   COMPARATIVO DE ENGINES: InnoDB vs MyISAM                               |
++--------------------------+-------------------------------+-------------------------------+
+|      CARACTERÍSTICA      |    InnoDB (Padrão atual)      |    MyISAM (Antigo padrão)     |
++--------------------------+-------------------------------+-------------------------------+
+|                          |                               |                               |
+|       TRANSAÇÕES         | • Sim (ACID)                  | • Não                         |
+|                          |                               |                               |
++--------------------------+-------------------------------+-------------------------------+
+|   CHAVES ESTRANGEIRAS    | • Sim                         | • Não                         |
++--------------------------+-------------------------------+-------------------------------+
+|                          | • Row-level                   | • Table-level                 |
+|         LOCKING          |  (Bloqueia apenas a linha)    |  (Bloqueia a tabela inteira)  |
+|                          |                               |                               |
++--------------------------+-------------------------------+-------------------------------+
+|     RECUPERAÇÃO APÓS     | • Alta                        | • Baixa                       |
+|          FALHA           |  (Usa redo/undo logs)         |  (Tabelas podem corromper)    |
++--------------------------+-------------------------------+-------------------------------+
+|      DESEMPENHO EM       | • Bom                         | • Muito bom                   |
+|         LEITURAS         |                               |  (Especialmente SELECT COUNT) |
++--------------------------+-------------------------------+-------------------------------+
+|      DESEMPENHO EM       | • Bom                         | • Ruim para muitas escritas   |
+|         ESCRITAS         |  (Com row-level)              |   simultâneas                 |
++--------------------------+-------------------------------+-------------------------------+
+|     TAMANHO NO DISCO     | • Maior                       | • Menor                       |
+|                          |  (Devido a logs e overhead)   |                               |
++--------------------------+-------------------------------+-------------------------------+
+
+Quando usar cada um:
+
+InnoDB – Para a maioria dos casos (dados críticos, com transações, vários usuários escrevendo ao mesmo tempo).
+
+MyISAM – Tabelas de leitura pesada e pouca escrita, como logs históricos, data warehouse simples. Ou em sistemas muito antigos.
+
+Armadilha comum: Usar MyISAM porque ouviu que é mais rápido, mas esquecer que ele não suporta transações. Se o sistema travar no meio de um UPDATE, você pode perder dados e ficar com a tabela inconsistente.
+
+//∘₊✧──────✧₊∘
+
+5. Identifique e explique a função de três ferramentas de interface gráfica utilizadas para o MySQL.
+
++---------------------------------------------------------------------------------------+
+|                   FERRAMENTAS DE GERENCIAMENTO DE BANCO DE DADOS                      |
++-------------------+---------------------------------------+---------------------------+
+|    FERRAMENTA     |               FUNÇÕES                 |          PERFIL           |
++-------------------+---------------------------------------+---------------------------+
+|                   | • Modelagem de dados (Diagramas ER)   | • Desktop / Gratuito      |
+|  MySQL Workbench  | • Administração e Backup/Restore      | • Oficial da Oracle       |
+|                   | • Monitoramento de performance        | • Focado 100% em MySQL    |
++-------------------+---------------------------------------+---------------------------+
+|                   | • Cliente universal (Multi-SGBD)      | • Desktop (Java)          |
+|      DBeaver      | • Editor SQL com autocompletar        | • Gratuito / Enterprise   |
+|                   | • Suporte a NoSQL                     | • Uso profissional misto  |
++-------------------+---------------------------------------+---------------------------+
+|                   | • Administração via navegador (Web)   | • Web (Escrito em PHP)    |
+|    phpMyAdmin     | • Gerenciar tabelas, users e SQL      | • Gratuito                |
+|                   | • Importar/Exportar (SQL e CSV)       | • Comum em Hospedagens    |
++-------------------+---------------------------------------+---------------------------+
+
+Armadilha: Confundir Workbench com apenas modelagem – ele também é ótimo para queries e admin. 
+Outra: deixar phpMyAdmin acessível publicamente sem senha forte – é um risco enorme de invasão. 
+
+//∘₊✧──────✧₊∘
+
+6. Descreva o processo de conexão ao MySQL via terminal. Quais são os comandos necessários?
+
++---------------------------------------------------------------------------------------+
+|                    GUIA DE CONEXÃO: MYSQL VIA TERMINAL (CLI)                          |
++---------------------------------------------------------------------------------------+
+|  [ PASSO A PASSO ]                                                                    |
+|                                                                                       |
+|  1. Abra o Terminal (PowerShell, Bash ou CMD)                                         |
+|  2. Digite:  mysql -u nome_usuario -p                                                 |
+|  3. Insira a senha (caracteres ficarão ocultos)                                       |
+|  4. Sucesso: Você verá o prompt "mysql> "                                             |
++--------------------------+------------------------------------------------------------+
+|        PARÂMETRO         |                    DESCRIÇÃO / USO                         |
++--------------------------+------------------------------------------------------------+
+|  -u [usuario]            | Define o usuário (Ex: -u root)                             |
+|  -p                      | Solicita a senha de forma segura                           |
+|  -h [host]               | IP ou domínio do servidor (Ex: -h 192.168.1.10)            |
+|  -P [porta]              | Porta (P maiúsculo!) se não for a 3306                     |
+|  -D [banco]              | Conecta diretamente em um banco específico                 |
++--------------------------+------------------------------------------------------------+
+|  [ EXEMPLO COMPLETO ]                                                                 |
+|  > mysql -u root -p -h localhost -P 3306                                              |
++---------------------------------------------------------------------------------------+
+|  [⚠️ ARMADILHAS ]                                                                     |
+|  • Senha grudada: -p1234 funciona, mas expõe a senha no histórico. Evite!             |
+|  • Ponto e vírgula: Esquecer o ";" no final dos comandos SQL dentro do prompt.        |
+|  • Root sem senha: Só funciona se você não configurou uma na instalação.              |
++---------------------------------------------------------------------------------------+
+
+//∘₊✧──────✧₊∘
+
+7. Como é possível listar todos os bancos de dados existentes no MySQL? Escreva o comando SQL correspondente.
+
++---------------------------------------------------------------------------------------+
+|                    COMANDO: LISTAR BANCOS DE DADOS NO MYSQL                           |
++---------------------------------------------------------------------------------------+
+|  [ COMANDO SQL ]                                                                      |
+|                                                                                       |
+|   >  SHOW DATABASES;                                                                  |
+|                                                                                       |
++---------------------------------------------------------------------------------------+
+|  [ EXPLICAÇÃO ]                                                                       |
+|                                                                                       |
+|  • Retorna todos os bancos que o seu usuário tem permissão para visualizar.           |
+|  • Inclui bancos do sistema: information_schema, mysql, performance_schema.           |
+|                                                                                       |
++---------------------------------------------------------------------------------------+
+|  [ ⚠️ ATENÇÃO / ARMADILHAS ]                                                          |
+|                                                                                       |
+|  • SHOW DATABASES vs SHOW TABLES:                                                     |
+|    - Databases: Lista os "containers" (bancos).                                       |
+|    - Tables: Lista o que tem dentro de um banco específico.                           |
+|                                                                                       |
+|  • Independência: Você pode rodar esse comando assim que logar, antes mesmo de        |
+|    selecionar qualquer banco de dados (não precisa de "USE").                         |
++---------------------------------------------------------------------------------------+
+
+
+//∘₊✧──────✧₊∘
+
+
+//∘₊✧──────✧₊∘
+
+
+//∘₊✧──────✧₊∘
+
+
+//∘₊✧──────✧₊∘
+
+
+//∘₊✧──────✧₊∘
