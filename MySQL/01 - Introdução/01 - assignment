@@ -196,14 +196,349 @@ Outra: deixar phpMyAdmin acessível publicamente sem senha forte – é um risco
 
 //∘₊✧──────✧₊∘
 
+8. Como criar uma conexão no MySQL Workbench? Liste o passo a passo.
+
++---------------------------------------------------------------------------------------+
+|                 CONFIGURAÇÃO: NOVA CONEXÃO NO MYSQL WORKBENCH                         |
++---------------------------------------------------------------------------------------+
+|  [ PASSO A PASSO ]                                                                    |
+|                                                                                       |
+|  1. Inicie o MySQL Workbench.                                                         |
+|  2. Clique no ícone [+] ao lado de "MySQL Connections".                               |
+|  3. Configure os campos na janela "Setup New Connection":                             |
+|                                                                                       |
+|     • Connection Name : Nome de sua escolha (ex: Local_DB)                            |
+|     • Hostname        : localhost (ou IP do servidor)                                 |
+|     • Port            : 3306 (padrão)                                                 |
+|     • Username        : root (ou seu usuário)                                         |
+|                                                                                       |
+|  4. Senha: Clique em "Store in Vault" para salvar ou deixe em branco para pedir dps.  |
+|  5. Teste: Clique em "Test Connection" antes de finalizar.                            |
+|  6. Finalize: Clique em [ OK ] e dê um duplo clique no card criado para entrar.       |
++---------------------------------------------------------------------------------------+
+|  [ 🛠️ RESOLUÇÃO DE PROBLEMAS ]                                                        |
+|                                                                                       |
+|  • Erro de Conexão? Verifique se o serviço está ativo:                                |
+|    - Windows: Services.msc (procure por MySQL)                                        |
+|    - Linux  : systemctl status mysql                                                  |
+|                                                                                       |
+|  • Firewall: Se o banco estiver em outro PC, a porta 3306 precisa estar liberada.     |
++---------------------------------------------------------------------------------------+
+
+//∘₊✧──────✧₊∘
+
+9. O que é e para que serve o comando USE nome_do_banco; no MySQL?
+
++---------------------------------------------------------------------------------------+
+|                    COMANDO SQL: USE (SELECIONAR BANCO ATIVO)                          |
++---------------------------------------------------------------------------------------+
+|  [ O QUE É ]                                                                          |
+|                                                                                       |
+|   Define qual banco de dados será o alvo dos seus próximos comandos.                  |
+|                                                                                       |
+|   SINTAXE:  USE nome_do_banco;                                                        |
+|                                                                                       |
++---------------------------------------------------------------------------------------+
+|  [ VANTAGEM PRÁTICA ]                                                                 |
+|                                                                                       |
+|  • Com USE:                                                                           |
+|    > USE biblioteca;                                                                  |
+|    > SELECT * FROM livros;                                                            |
+|                                                                                       |
+|  • Sem USE (Caminho absoluto):                                                        |
+|    > SELECT * FROM biblioteca.livros;                                                 |
+|                                                                                       |
++---------------------------------------------------------------------------------------+
+|  [ 💡 DICA DE EXPERTO ]                                                               |
+|                                                                                       |
+|  • O comando USE é uma extensão do MySQL (não é padrão SQL universal).                |
+|  • No PostgreSQL, por exemplo, usa-se: \c nome_do_banco                               |
+|                                                                                       |
++---------------------------------------------------------------------------------------+
+|  [ ⚠️ ARMADILHA ]                                                                     |
+|                                                                                       |
+|  • Rodar "SHOW TABLES;" e vir vazio? Você pode ter esquecido o USE ou estar no       |
+|    banco errado.                                                                      |
+|  • DÚVIDA? Use: SELECT DATABASE();  <-- Mostra qual banco você está usando agora.     |
++---------------------------------------------------------------------------------------+
+
+//∘₊✧──────✧₊∘
+
+10. No MySQL, qual é o comando para listar todas as tabelas de um banco de dados? Escreva o comando e um exemplo prático.
+
++---------------------------------------------------------------------------------------+
+|                    COMANDO SQL: SHOW TABLES (LISTAR TABELAS)                          |
++---------------------------------------------------------------------------------------+
+|  [ COMANDO ]                                                                          |
+|                                                                                       |
+|   >  SHOW TABLES;                                                                     |
+|                                                                                       |
++---------------------------------------------------------------------------------------+
+|  [ EXEMPLO PRÁTICO ]                                                                  |
+|                                                                                       |
+|   1. Seleciona o banco:  USE empresa;                                                 |
+|   2. Lista as tabelas:   SHOW TABLES;                                                 |
+|                                                                                       |
+|   Saída esperada:                                                                     |
+|   +--------------------+                                                              |
+|   | Tables_in_empresa  |                                                              |
+|   +--------------------+                                                              |
+|   | clientes           |                                                              |
+|   | pedidos            |                                                              |
+|   | produtos           |                                                              |
+|   +--------------------+                                                              |
++---------------------------------------------------------------------------------------+
+|  [ MODO ATALHO ]                                                                      |
+|                                                                                       |
+|  • Listar tabelas sem precisar dar "USE" antes:                                       |
+|    > SHOW TABLES FROM nome_do_banco;                                                  |
+|                                                                                       |
++---------------------------------------------------------------------------------------+
+|  [ ⚠️ IMPORTANTE ]                                                                     |
+|                                                                                       |
+|  • O SHOW TABLES só funciona para o banco ATIVO.                                      |
+|  • Se não houver banco selecionado, o MySQL retornará um erro ou lista vazia.         |
+|  • Comando de checagem: SELECT DATABASE();                                            |
++---------------------------------------------------------------------------------------+
+
+//∘₊✧──────✧₊∘
+
+11. Dê um exemplo prático de conexão ao MySQL utilizando o DBeaver. Quais são os parâmetros necessários para essa conexão?
+
++---------------------------------------------------------------------------------------+
+|                    CONFIGURAÇÃO: CONEXÃO NO DBEAVER (MULTI-SGBD)                      |
++---------------------------------------------------------------------------------------+
+|  [ PARÂMETROS NECESSÁRIOS ]                                                           |
+|                                                                                       |
+|  • Host    : localhost (ou IP do servidor)                                            |
+|  • Porta   : 3306 (padrão MySQL)                                                      |
+|  • Usuário : root (ou o seu usuário configurado)                                      |
+|  • Senha   : A senha definida na instalação                                           |
+|  • Banco   : Opcional (pode conectar na instância e escolher o banco depois)          |
++---------------------------------------------------------------------------------------+
+|  [ PASSO A PASSO ]                                                                    |
+|                                                                                       |
+|  1. Abra o DBeaver.                                                                   |
+|  2. Clique no ícone de "Tomada com +" (New Database Connection).                      |
+|  3. Escolha "MySQL" na lista de drivers e clique em [ Next ].                         |
+|  4. Preencha o Server Host, Port, Username e Password.                                |
+|  5. Clique em "Test Connection".                                                      |
+|     * Se pedir para baixar o Driver JDBC, clique em [ Download ].                    |
+|  6. Teste OK? Clique em [ Finish ].                                                   |
++---------------------------------------------------------------------------------------+
+|  [ 🛠️ DICAS E ARMADILHAS ]                                                            |
+|                                                                                       |
+|  • Driver JDBC: O DBeaver é universal porque baixa drivers específicos. Precisa de    |
+|    internet na primeira vez que conectar a um banco novo.                             |
+|                                                                                       |
+|  • Erro de classe? Verifique sua conexão com a rede para o download do driver.        |
+|                                                                                       |
+|  • Porta diferente? Se não conectar na 3306, cheque o arquivo "my.cnf" ou "my.ini"    |
+|    do seu servidor para ver se o MySQL está rodando em outra porta (ex: 3307).        |
++---------------------------------------------------------------------------------------+
+
+//∘₊✧──────✧₊∘
+
+12. Durante a conexão via terminal, o comando mysql -u root -p é utilizado. Explique o que cada parte desse comando significa.
+
++---------------------------------------------------------------------------------------+
+|                   ANATOMIA DO COMANDO: mysql -u root -p                               |
++---------------------------------------------------------------------------------------+
+|   PARTE    |       NOME          |                  DESCRIÇÃO                         |
++------------+---------------------+----------------------------------------------------+
+|   mysql    | Cliente Executável  | O programa que inicia a comunicação com o servidor.|
++------------+---------------------+----------------------------------------------------+
+|    -u      | Flag de Usuário     | Abreviação de --user=. Indica quem está acessando. |
++------------+---------------------+----------------------------------------------------+
+|   root     | Nome do Usuário     | O superusuário (administrador) padrão do MySQL.    |
++------------+---------------------+----------------------------------------------------+
+|    -p      | Flag de Senha       | Abreviação de --password. Solicita a senha de      |
+|            |                     | forma interativa e oculta (mais seguro).           |
++------------+---------------------+----------------------------------------------------+
+|                                                                                       |
+|  [ COMANDO EQUIVALENTE (LONGO) ]                                                      |
+|  > mysql --user=root --password                                                       |
+|                                                                                       |
++---------------------------------------------------------------------------------------+
+|  [ ⚠️ CUIDADO COM A SENHA ]                                                            |
+|                                                                                       |
+|  • FORMA ERRADA: -p 12345 (O espaço faz o MySQL achar que "12345" é um banco).       |
+|  • FORMA EXPOSTA: -p12345 (Funciona, mas a senha fica gravada no histórico).          |
+|  • FORMA CORRETA: -p (Digite a senha apenas quando o prompt solicitar).               |
++---------------------------------------------------------------------------------------+
+
+//∘₊✧──────✧₊∘
+
+13. Cite as principais diferenças entre o MySQL Workbench, o DBeaver e o phpMyAdmin. Qual deles é mais indicado para o uso web?
+
++---------------------------------------------------------------------------------------+
+|                COMPARATIVO: FERRAMENTAS DE GERENCIAMENTO (GUI vs WEB)                 |
++-------------------+------------+---------------------------+--------------------------+
+|    FERRAMENTA     |    TIPO    |      FOCO PRINCIPAL       |      INDICADO WEB?       |
++-------------------+------------+---------------------------+--------------------------+
+|                   |            | • MySQL Puro              |                          |
+|  MySQL Workbench  |  Desktop   | • Modelagem ER            |  Não (Requer instalação)  |
+|                   |            | • Administração/Backup    |                          |
++-------------------+------------+---------------------------+--------------------------+
+|                   |            | • Multi-bancos (Oracle,   |                          |
+|      DBeaver      |  Desktop   |   Postgres, NoSQL, etc)   |  Não (Versão Desktop)     |
+|                   |            | • Editor SQL Poderoso     |                          |
++-------------------+------------+---------------------------+--------------------------+
+|                   |            | • MySQL / MariaDB         |                          |
+|    phpMyAdmin     |    Web     | • Leve e Portátil         |  SIM (O mais indicado!)   |
+|                   |            | • Roda via Navegador      |                          |
++-------------------+------------+---------------------------+--------------------------+
+|                                                                                       |
+|  [ POR QUE O PHPMYADMIN É MELHOR PARA WEB? ]                                          |
+|  • Escrito em PHP: Roda direto no servidor (Apache/Nginx).                            |
+|  • Acesso Universal: Você gerencia o banco de qualquer lugar via URL, sem precisar    |
+|    instalar softwares na sua máquina cliente.                                          |
+|                                                                                       |
++---------------------------------------------------------------------------------------+
+|  [ ⚠️ ALERTA DE SEGURANÇA ]                                                            |
+|  • phpMyAdmin exposto é um alvo comum de ataques. Sempre use senhas fortes, SSL e,    |
+|    se possível, restrição por IP para evitar invasões.                                |
++---------------------------------------------------------------------------------------+
+
+//∘₊✧──────✧₊∘
+
+14. Suponha que você precise garantir que apenas usuários autenticados possam acessar um banco de dados MySQL. Que práticas de segurança você aplicaria?
+
++---------------------------------------------------------------------------------------+
+|                    CHECKLIST: SEGURANÇA NO BANCO DE DADOS MYSQL                       |
++---------------------------------------------------------------------------------------+
+|   PRÁTICA                  |                  DESCRIÇÃO / COMANDO                     |
++----------------------------+----------------------------------------------------------+
+| 1. Menor Privilégio        | • Não use ROOT em apps. Crie usuários específicos.       |
+|                            |   > GRANT SELECT ON banco.* TO 'leitor'@'%';             |
++----------------------------+----------------------------------------------------------+
+| 2. Senhas Fortes           | • Exija letras, números e símbolos.                      |
+|                            |   > ALTER USER 'user'@'host' IDENTIFIED BY 'senha_forte';|
++----------------------------+----------------------------------------------------------+
+| 3. Criptografia (SSL)      | • Force o uso de conexão segura para evitar "sniffing".  |
+|                            |   > ... REQUIRE SSL no GRANT.                            |
++----------------------------+----------------------------------------------------------+
+| 4. Controle de Host        | • No my.cnf, use bind-address = 127.0.0.1 (local).       |
+|                            | • Restrinja IPs: 'user'@'192.168.1.50'                   |
++----------------------------+----------------------------------------------------------+
+| 5. Limpeza de Padrão       | • Remova usuários anônimos e root remoto:                |
+|                            |   > DROP USER ''@'localhost';                            |
+|                            |   > DROP USER 'root'@'%';                                |
++----------------------------+----------------------------------------------------------+
+| 6. Auditoria e Firewall    | • Ative o 'general_log' para monitorar acessos.          |
+|                            | • Bloqueie a porta 3306 no firewall para IPs externos.   |
++----------------------------+----------------------------------------------------------+
+|                                                                                       |
+|  [ ⚠️ ARMADILHA CLÁSSICA ]                                                            |
+|                                                                                       |
+|  • Jamais use: GRANT ALL PRIVILEGES ON *.* TO 'app'@'%';                             |
+|    Isso dá poder total ao usuário de aplicação. Seja específico nas permissões!       |
+|                                                                                       |
+|  • Achar que só a senha resolve: Conexões sem SSL transmitem a senha em texto puro   |
+|    na rede. Use sempre túneis SSH ou SSL/TLS.                                         |
++---------------------------------------------------------------------------------------+
+
+//∘₊✧──────✧₊∘
+
+15. Explique o conceito de buffer de memória no MySQL e sua importância para a performance do banco de dados.
+
++---------------------------------------------------------------------------------------+
+|                    PERFORMANCE: INNODB BUFFER POOL (CACHE DE RAM)                     |
++---------------------------------------------------------------------------------------+
+|  [ O QUE É? ]                                                                         |
+|                                                                                       |
+|  É uma área da RAM reservada para armazenar em cache páginas de DADOS e ÍNDICES.      |
+|                                                                                       |
+|  • Cache Hit  : Dado está na RAM -> Acesso em Microssegundos (Ultra rápido).          |
+|  • Cache Miss : Dado no Disco    -> Acesso em Milissegundos (Até 1000x mais lento).   |
++---------------------------------------------------------------------------------------+
+|  [ IMPORTÂNCIA ]                                                                      |
+|                                                                                       |
+|  1. Redução de I/O de disco: Evita milhões de leituras físicas desnecessárias.        |
+|  2. Aceleração de Consultas: SELECTs repetitivos tornam-se instantâneos.              |
+|  3. Escritas Otimizadas: Mudanças são feitas na RAM e gravadas em disco depois        |
+|     de forma assíncrona (mais eficiente).                                             |
++---------------------------------------------------------------------------------------+
+|  [ COMO CONFIGURAR (my.cnf / my.ini) ]                                                |
+|                                                                                       |
+|   innodb_buffer_pool_size = 4G   <-- Exemplo para 4 Gigabytes                         |
+|                                                                                       |
+|  💡 REGRA DE OURO: Use 70-80% da RAM total em servidores dedicados ao MySQL.          |
++---------------------------------------------------------------------------------------+
+|  [ ⚠️ ARMADILHAS ]                                                                     |
+|                                                                                       |
+|  • Valor muito PEQUENO: O MySQL vira um "escravo do disco", matando a performance.    |
+|  • Valor muito GRANDE : Causa "Swapping" (usa disco como RAM), o que trava o sistema. |
+|  • Só leitura? NÃO: Ele também guarda "dirty pages" (páginas modificadas) para        |
+|    escrita posterior. É vital para o desempenho de INSERTs/UPDATEs também.            |
++---------------------------------------------------------------------------------------+
+|  [ IMPACTO REAL ]                                                                     |
+|  Uma consulta em 500MB de dados pode ser 100x mais rápida após a primeira execução,   |
+|  pois os dados já estarão "quentes" no Buffer Pool.                                   |
++---------------------------------------------------------------------------------------+
 
 //∘₊✧──────✧₊∘
 
 
-//∘₊✧──────✧₊∘
-
-
-//∘₊✧──────✧₊∘
-
-
-//∘₊✧──────✧₊∘
+╔═══════════════════════════════════════════════════════════════════════════════════════╗
+║                      💻 GUIA DE SOBREVIVÊNCIA  💻                                     ║
+╠═══════════════════════════════════════════════════════════════════════════════════════╣
+║ [01] ARQUITETURA: RELACIONAL VS NÃO-RELACIONAL                                        ║
+╟──────────────────────────┬───────────────────────────────┬────────────────────────────╢
+║      CARACTERÍSTICA      │       RELACIONAL (SQL)        │    NÃO RELACIONAL (NoSQL)  ║
+╟──────────────────────────┼───────────────────────────────┼────────────────────────────╢
+║ ESTRUTURA                │ Tabelas/Esquema Rígido        │ JSON, Grafos, Flexível     ║
+║ RELACIONAMENTOS          │ Chaves Estrangeiras, Joins    │ Embedding ou Referências   ║
+║ PROPRIEDADES             │ ACID (Consistência Total)     │ BASE (Disponibilidade)     ║
+╚══════════════════════════╧═══════════════════════════════╧════════════════════════════╝
+╔═══════════════════════════════════════════════════════════════════════════════════════╗
+║ [02] STORAGE ENGINES: O CORAÇÃO DO DADO                                               ║
+╟─────────────────┬─────────────────────────────────┬───────────────────────────────────╢
+║ RECURSO         │ InnoDB (Padrão Moderno)         │ MyISAM (Legado/Leitura)           ║
+╟─────────────────┼─────────────────────────────────┼───────────────────────────────────╢
+║ Transações      │ Sim (ACID)                      │ Não                               ║
+║ Locking         │ Row-level (Bloqueia a linha)    │ Table-level (Bloqueia a tabela)   ║
+║ Integridade     │ Suporta Foreign Keys            │ Não suporta                       ║
+║ Recuperação     │ Alta (Logs de Undo/Redo)        │ Baixa (Risco de corrupção)        ║
+╚═════════════════╧═════════════════════════════════╧═══════════════════════════════════╝
+╔═══════════════════════════════════════════════════════════════════════════════════════╗
+║ [03] TERMINAL (CLI) & ACESSO                                                          ║
+╟───────────────────────────────────────────────────────────────────────────────────────╢
+║ > COMANDO: mysql -h [host] -P [porta] -u [usuario] -p                                 ║
+║                                                                                       ║
+║ • -u root : Usuário (Administrador padrão).                                           ║
+║ • -p      : Solicita senha (NUNCA digite a senha grudada no -p, ex: -p1234).          ║
+║ • -h / -P : Host (localhost) e Porta (3306).                                          ║
+╚═══════════════════════════════════════════════════════════════════════════════════════╝
+╔═══════════════════════════════════════════════════════════════════════════════════════╗
+║ [04] COMANDOS DE NAVEGAÇÃO RÁPIDA (SQL)                                               ║
+╟───────────────────────────────────────────────────────────────────────────────────────╢
+║ > SHOW DATABASES;           // Lista os bancos (os "containers")                      ║
+║ > USE nome_do_banco;        // Entra no banco desejado                                ║
+║ > SHOW TABLES;              // Lista as tabelas do banco atual                        ║
+║ > SELECT DATABASE();        // "Onde eu estou?" (Mostra banco ativo)                  ║
+║ > SHOW TABLES FROM banco;   // Lista tabelas de outro banco sem sair do atual         ║
+╚═══════════════════════════════════════════════════════════════════════════════════════╝
+╔═══════════════════════════════════════════════════════════════════════════════════════╗
+║ [05] FERRAMENTAS DE GESTÃO                                                            ║
+╟──────────────────┬─────────────────────────────────────┬──────────────────────────────╢
+║ FERRAMENTA       │ PERFIL                              │ USO INDICADO                 ║
+╟──────────────────┼─────────────────────────────────────┼──────────────────────────────╢
+║ MySQL Workbench  │ Oficial Oracle / Desktop            │ Modelagem ER e Admin         ║
+║ DBeaver          │ Universal / Multi-bancos            │ Uso Profissional Misto       ║
+║ phpMyAdmin       │ Web (PHP) / Navegador               │ Hospedagens / Web SImples    ║
+╚════════════════──╧═════════════════════════════════════╧══════════════════════════════╝
+╔═══════════════════════════════════════════════════════════════════════════════════════╗
+║ [06] PERFORMANCE E SEGURANÇA                                                          ║
+╟───────────────────────────────────────────────────────────────────────────────────────╢
+║ 🚀 PERFORMANCE: InnoDB Buffer Pool                                                    ║
+║ • Configure 'innodb_buffer_pool_size' para 70-80% da RAM total do servidor.           ║
+║ • Isso mantém dados e índices na memória, evitando o gargalo do disco.                ║
+║                                                                                       ║
+║ 🛡️ SEGURANÇA:                                                                         ║
+║ • Princípio do Menor Privilégio: Nunca use root para a aplicação.                     ║
+║ • SSL/TLS: Force conexões seguras para evitar interceptação de dados.                 ║
+║ • Bind-Address: Use 127.0.0.1 no config para não expor o banco à internet.            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════╝
+║                   [  MYSQL SURVIVAL GUIDE v1.0 ]                                      ║
+╚═══════════════════════════════════════════════════════════════════════════════════════╝
