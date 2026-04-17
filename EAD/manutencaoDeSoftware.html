@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerência de Configuração e Manutenção de Software – ABNT</title>
+    <style>
+        /* RESET BÁSICO E ESTILO ABNT */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.5; /* espaçamento 1,5 */
+            color: #000000;
+            margin: 2.5cm 3cm 2.5cm 3cm; /* margens ABNT: esquerda 3cm, direita 2cm, superior 3cm, inferior 2cm – aqui simplificado para leitura em tela */
+            max-width: 100%;
+            text-align: justify;
+            counter-reset: h1counter h2counter h3counter;
+        }
+
+        /* CAPA / FOLHA DE ROSTO (elementos específicos) */
+        .capa {
+            text-align: center;
+            margin-bottom: 2cm;
+        }
+        .capa .instituicao {
+            font-weight: bold;
+            font-size: 14pt;
+            margin-bottom: 2cm;
+        }
+        .capa .curso {
+            font-weight: bold;
+            font-size: 14pt;
+            margin-bottom: 4cm;
+        }
+        .capa .disciplina {
+            font-weight: bold;
+            font-size: 14pt;
+            margin-bottom: 1cm;
+        }
+        .capa .titulo-trabalho {
+            font-weight: bold;
+            font-size: 16pt;
+            margin: 3cm 0 3cm 0;
+            text-transform: uppercase;
+        }
+        .capa .cidade-ano {
+            margin-top: 3cm;
+            font-weight: normal;
+            font-size: 12pt;
+        }
+
+        /* SUMÁRIO (simulado com links, sem numeração de página) */
+        .sumario {
+            margin: 1.5cm 0 1cm 0;
+        }
+        .sumario h2 {
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .sumario-lista {
+            list-style: none;
+            margin-left: 0;
+        }
+        .sumario-lista li {
+            margin-bottom: 0.2cm;
+        }
+        .sumario-lista a {
+            text-decoration: none;
+            color: #000;
+        }
+        .sumario-lista .pontos {
+            float: right;
+        }
+
+        /* TÍTULOS (numeração automática) */
+        h1 {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12pt;
+            margin: 1cm 0 0.5cm 0;
+            text-align: left;
+            counter-reset: h2counter;
+        }
+        h1::before {
+            content: counter(h1counter) " ";
+            counter-increment: h1counter;
+        }
+
+        h2 {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12pt;
+            margin: 0.8cm 0 0.4cm 0;
+            text-align: left;
+            counter-reset: h3counter;
+        }
+        h2::before {
+            content: counter(h1counter) "." counter(h2counter) " ";
+            counter-increment: h2counter;
+        }
+
+        h3 {
+            font-weight: bold;
+            font-size: 12pt;
+            margin: 0.6cm 0 0.3cm 0;
+            text-align: left;
+            font-style: italic;
+        }
+        h3::before {
+            content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) " ";
+            counter-increment: h3counter;
+        }
+
+        /* parágrafos */
+        p {
+            margin-bottom: 0.5cm;
+            text-indent: 1.25cm; /* recuo de primeira linha */
+        }
+
+        /* citações longas (mais de 3 linhas) */
+        blockquote {
+            margin: 0.5cm 0 0.5cm 4cm; /* recuo 4cm da margem esquerda */
+            font-size: 10pt;
+            line-height: 1.2;
+            text-align: justify;
+            font-style: normal;
+        }
+
+        /* listas */
+        ul, ol {
+            margin: 0.2cm 0 0.4cm 1.5cm;
+            text-indent: 0;
+        }
+        li {
+            margin-bottom: 0.1cm;
+            text-indent: 0;
+        }
+
+        /* tabelas / quadros */
+        .quadro-container {
+            margin: 0.8cm 0;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            font-size: 11pt;
+            border: 1px solid #000;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px 5px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
+        }
+        .quadro-titulo {
+            font-weight: bold;
+            margin-top: 0.3cm;
+            font-size: 11pt;
+        }
+        .quadro-fonte {
+            font-size: 10pt;
+            text-align: right;
+            margin-top: 0.1cm;
+            margin-bottom: 0.5cm;
+        }
+
+        /* referências */
+        .referencias {
+            margin-top: 1.5cm;
+        }
+        .referencias h2 {
+            text-align: left;
+        }
+        .ref-item {
+            margin-bottom: 0.3cm;
+            margin-left: 0;
+            text-indent: 0;
+            padding-left: 0;
+            font-size: 11pt;
+        }
+
+        /* quebra de página simulada */
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* reset counter para cada seção principal */
+        body {
+            counter-reset: h1counter;
+        }
+        /* a primeira seção "1 INTRODUÇÃO AO TEMA" terá h1 */
+        h1 {
+            counter-reset: h2counter;
+        }
+        /* ajustes para sumário não afetar numeração */
+        .sumario, .capa {
+            counter-reset: none;
+        }
+        .no-number::before {
+            content: "" !important;
+            counter-increment: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="capa">
+    <div class="instituicao">UNISENAI CAMPUS JOINVILLE</div>
+    <div class="curso">ANÁLISE E DESENVOLVIMENTO DE SISTEMAS</div>
+    <div class="disciplina">GERÊNCIA DE CONFIGURAÇÃO E MANUTENÇÃO DE SOFTWARE</div>
+    <div class="titulo-trabalho">Atividade EAD – Gerência de Configuração e Manutenção de Software</div>
+    <p style="text-indent:0; margin-top:1.5cm;">Disciplina: Gerência de Configuração e Manutenção de Software</p>
+    <p style="text-indent:0;">Professores: Emerson Amancio e Tiago Ricaldi</p>
+    <div class="cidade-ano">Joinville<br>2026</div>
+</div>
+
+<!-- SUMÁRIO (sem numeração automática) -->
+<div class="sumario">
+    <h2 class="no-number" style="text-align:center;">SUMÁRIO</h2>
+    <ul class="sumario-lista" style="list-style:none; margin-left:0;">
+        <li><a href="#sec1">1 INTRODUÇÃO AO TEMA</a><span class="pontos">3</span></li>
+        <li style="margin-left:1cm;"><a href="#sec1.1">1.1 Conceito de Gerência de Configuração de Software</a><span class="pontos">3</span></li>
+        <li style="margin-left:1cm;"><a href="#sec1.2">1.2 Conceito de Manutenção de Software</a><span class="pontos">3</span></li>
+        <li style="margin-left:1cm;"><a href="#sec1.3">1.3 Importância no Ciclo de Vida do Software</a><span class="pontos">4</span></li>
+        <li><a href="#sec2">2 PRINCIPAIS ÁREAS ENVOLVIDAS</a><span class="pontos">4</span></li>
+        <li style="margin-left:1cm;"><a href="#sec2.1">2.1 Controle de Versão e Versionamento de Software</a><span class="pontos">4</span></li>
+        <li style="margin-left:1cm;"><a href="#sec2.2">2.2 Gerenciamento de Mudanças</a><span class="pontos">5</span></li>
+        <li style="margin-left:1cm;"><a href="#sec2.3">2.3 Controle de Artefatos</a><span class="pontos">6</span></li>
+        <li style="margin-left:1cm;"><a href="#sec2.4">2.4 Baselines e Rastreabilidade</a><span class="pontos">6</span></li>
+        <li style="margin-left:1cm;"><a href="#sec2.5">2.5 Tipos de Manutenção de Software</a><span class="pontos">7</span></li>
+        <li style="margin-left:1cm;"><a href="#sec2.6">2.6 Boas Práticas de Organização de Repositórios</a><span class="pontos">8</span></li>
+        <li style="margin-left:1cm;"><a href="#sec2.7">2.7 Padronização de Commits e Branches</a><span class="pontos">9</span></li>
+        <li><a href="#sec3">3 APLICAÇÃO PRÁTICA</a><span class="pontos">9</span></li>
+        <li><a href="#sec4">4 EXEMPLOS E ESTUDO DE CASO</a><span class="pontos">11</span></li>
+        <li><a href="#sec5">5 CONCLUSÃO</a><span class="pontos">13</span></li>
+        <li><a href="#ref">REFERÊNCIAS</a><span class="pontos">14</span></li>
+    </ul>
+</div>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<h1 id="sec1">INTRODUÇÃO AO TEMA</h1>
+
+<h2 id="sec1.1">Conceito de Gerência de Configuração de Software</h2>
+<p>A Gerência de Configuração de Software (GCS) é um conjunto de atividades desenvolvidas para administrar as mudanças ao longo de todo o ciclo de vida do software. De acordo com Pressman e Maxim (2021, p. 470), a GCS é uma atividade de garantia da qualidade do software que é aplicada durante o processo de software inteiro. A norma IEEE Std 828-2012 define a GCS como a disciplina de identificar a configuração de um sistema em pontos discretos no tempo, com o propósito de sistematicamente controlar as mudanças na configuração e manter a integridade e rastreabilidade da configuração durante todo o ciclo de vida do sistema.</p>
+<p>Em termos práticos, a GCS abrange o controle de versões de código-fonte, documentação, requisitos, arquivos de configuração e qualquer outro artefato que compõe o produto de software. A ausência de uma GCS bem estruturada resulta em caos: desenvolvedores sobrescrevendo o trabalho uns dos outros, versões incompatíveis sendo implantadas em produção e ausência de histórico auditável das decisões técnicas tomadas ao longo do tempo.</p>
+<p>Harmel-Law (2024) apresenta uma perspectiva contemporânea e inovadora sobre o controle de artefatos de decisão arquitetural, ao propor os Registros de Decisão Arquitetural (ADRs — <em>Architectural Decision Records</em>). O autor argumenta que "ADRs are short documents [...] that tend to follow a typical format. Each ADR records a single architectural decision that has been taken, along with appropriate supporting information" (HARMEL-LAW, 2024, p. 116). Essa abordagem representa uma extensão natural da GCS tradicional: não apenas o código é versionado, mas também as decisões que o moldaram.</p>
+
+<h2 id="sec1.2">Conceito de Manutenção de Software</h2>
+<p>A Manutenção de Software consiste no conjunto de atividades realizadas após a entrega de um produto de software com o objetivo de corrigir defeitos, melhorar desempenho ou adaptar o produto a um ambiente modificado. Sommerville (2019, p. 241) define manutenção de software como "o processo de modificar um programa depois que ele foi entregue para uso".</p>
+<p>Do ponto de vista econômico, a manutenção representa a fase mais longa e custosa do ciclo de vida de um software. Estima-se que entre 60% e 80% do custo total de um sistema seja destinado às atividades de manutenção (PRESSMAN; MAXIM, 2021). Esse dado reforça a necessidade de práticas robustas de GCS: sem rastreabilidade e controle adequados, cada intervenção de manutenção torna-se uma operação de risco elevado.</p>
+
+<h2 id="sec1.3">Importância no Ciclo de Vida do Software</h2>
+<p>A GCS e a manutenção de software são complementares e interdependentes. A GCS fornece a infraestrutura de controle que torna a manutenção segura, rastreável e eficiente. Sem GCS, a manutenção opera às cegas; sem processos de manutenção claros, a GCS torna-se um repositório estático sem valor operacional.</p>
+<p>Harmel-Law (2024) demonstra essa interdependência ao discutir como decisões arquiteturais precisam ser registradas, rastreadas e eventualmente substituídas ao longo da vida de um sistema. O autor introduz o conceito de <em>status</em> dos ADRs — Rascunho (<em>Draft</em>), Proposto (<em>Proposed</em>), Aceito (<em>Accepted</em>) e Substituído (<em>Superseded</em>) —, que funciona como um mecanismo de baseline e rastreabilidade análogo ao versionamento de código-fonte. Segundo o autor, "ADRs are immutable: written once, read many times, and never updated once accepted" (HARMEL-LAW, 2024, p. 116), refletindo o princípio fundamental da imutabilidade dos registros históricos na GCS.</p>
+
+<h1 id="sec2">PRINCIPAIS ÁREAS ENVOLVIDAS</h1>
+
+<h2 id="sec2.1">Controle de Versão e Versionamento de Software</h2>
+<p>O controle de versão é o alicerce técnico da GCS moderna. Por meio de Sistemas de Controle de Versão (VCS — <em>Version Control Systems</em>), cada alteração em artefatos de software é registrada com metadados como autor, data, hora e descrição da mudança. Os VCS modernos, especialmente o Git, adotam um modelo distribuído em que cada desenvolvedor possui uma cópia completa do histórico do repositório, eliminando o ponto único de falha presente nos modelos centralizados mais antigos.</p>
+<p>Harmel-Law (2024) evidencia a relevância do controle de versão distribuído ao descrever, no relato de adoção do processo de conselho arquitetural (<em>Architecture Advice Process</em>), que as equipes que adotam entrega baseada em tronco (<em>trunk-based delivery</em>) eliminam <em>pull requests</em> de longa duração, melhorando métricas de frequência de implantação e tempo de entrega. O autor cita que uma equipe que estudou <em>Accelerate</em> "realized that by moving to a trunk-based delivery practice, they could eliminate pull requests altogether and consequently improve on their lead time for changes and deployment frequency metrics, and [...] do it safely" (HARMEL-LAW, 2024, p. 78). Esse contexto demonstra que o controle de versão não é apenas uma ferramenta técnica, mas um habilitador de práticas ágeis e de qualidade.</p>
+
+<div class="quadro-container">
+    <div class="quadro-titulo">Quadro 1 — Comparativo entre modelos de controle de versão</div>
+    <table>
+        <thead>
+            <tr><th>Aspecto</th><th>VCS Centralizado (SVN)</th><th>VCS Distribuído (Git)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Modelo de repositório</td><td>Um único servidor central</td><td>Cada cópia é um repositório completo</td></tr>
+            <tr><td>Trabalho offline</td><td>Limitado — requer conexão para a maioria das operações</td><td>Pleno — commits, branches e histórico locais</td></tr>
+            <tr><td>Branching</td><td>Pesado e custoso</td><td>Leve e incentivado</td></tr>
+            <tr><td>Ponto único de falha</td><td>Sim</td><td>Não</td></tr>
+            <tr><td>Rastreabilidade</td><td>Linear e centralizada</td><td>Distribuída com grafos de commits</td></tr>
+        </tbody>
+    </table>
+    <div class="quadro-fonte">Fonte: Elaboração própria (2026).</div>
+</div>
+
+<h2 id="sec2.2">Gerenciamento de Mudanças</h2>
+<p>O Gerenciamento de Mudanças (<em>Change Management</em>) é o processo formal pelo qual solicitações de alteração são avaliadas, aprovadas, implementadas e verificadas. Segundo Pressman e Maxim (2021, p. 475), o controle de mudanças combina procedimentos humanos e ferramentas automatizadas para proporcionar um mecanismo de controle das mudanças.</p>
+<p>Harmel-Law (2024) propõe uma reinterpretação radical do gerenciamento de mudanças arquiteturais por meio do <em>Architecture Advice Process</em>. Em vez de centralizar a aprovação de mudanças em um único arquiteto ou comitê, o processo distribui o poder de decidir para qualquer membro da equipe, exigindo apenas que o proponente da mudança consulte dois grupos: as partes afetadas pela decisão e os especialistas no domínio da mudança. O autor sintetiza:</p>
+<blockquote>
+    Anyone [...] can take (select a decision option) and communicate an architectural decision as long as during the option-making stage, they seek advice from: Everyone who will be meaningfully affected by the decision [and] People who have expertise in the area in which the decision is being taken. (HARMEL-LAW, 2024, p. 71)
+</blockquote>
+<p>Essa abordagem descentralizada do gerenciamento de mudanças mantém a rastreabilidade e o controle sem criar os gargalos típicos dos modelos tradicionais, nos quais um único arquiteto torna-se ponto de bloqueio para toda a equipe.</p>
+
+<h2 id="sec2.3">Controle de Artefatos</h2>
+<p>O controle de artefatos abrange a identificação, armazenamento, versionamento e recuperação de todos os produtos de trabalho gerados durante o desenvolvimento de software: código-fonte, documentação de requisitos, casos de teste, scripts de implantação, diagramas de arquitetura, arquivos de configuração de infraestrutura e registros de decisão.</p>
+<p>Harmel-Law (2024) amplia a concepção tradicional de artefatos ao incluir explicitamente as decisões arquiteturais como itens sujeitos a controle formal. Os ADRs, na proposta do autor, possuem identificadores únicos, metadados de autoria e data, ciclo de vida controlado por status e imutabilidade após aceitação. O autor recomenda que os ADRs sejam armazenados em ferramentas de desenvolvimento como wikis ou repositórios de controle de código-fonte, assegurando que "ADRs are written in formats familiar to developers and stored in developer tooling" (HARMEL-LAW, 2024, p. 154).</p>
+
+<div class="quadro-container">
+    <div class="quadro-titulo">Quadro 2 — Tipos de artefatos e mecanismos de controle recomendados</div>
+    <table>
+        <thead><tr><th>Tipo de Artefato</th><th>Ferramenta de Controle</th><th>Observações</th></tr></thead>
+        <tbody>
+            <tr><td>Código-fonte</td><td>Git (GitHub, GitLab, Bitbucket)</td><td>Versionamento completo com histórico</td></tr>
+            <tr><td>Documentação</td><td>Git + wiki ou Confluence</td><td>Versionamento junto ao código</td></tr>
+            <tr><td>Requisitos</td><td>Jira, Azure DevOps, GitLab Issues</td><td>Rastreabilidade até o código</td></tr>
+            <tr><td>Decisões arquiteturais (ADRs)</td><td>Git ou wiki do projeto</td><td>Imutáveis após aceitos (HARMEL-LAW, 2024)</td></tr>
+            <tr><td>Artefatos de build</td><td>Nexus, Artifactory, GitHub Packages</td><td>Versionamento semântico</td></tr>
+            <tr><td>Infraestrutura como código</td><td>Git + Terraform, Ansible</td><td>Mesma rastreabilidade do código</td></tr>
+        </tbody>
+    </table>
+    <div class="quadro-fonte">Fonte: Elaboração própria (2026).</div>
+</div>
+
+<h2 id="sec2.4">Baselines e Rastreabilidade</h2>
+<p>Uma <em>baseline</em> é uma fotografia formal e aprovada de um conjunto de itens de configuração em um momento específico do projeto, que serve como base para o desenvolvimento subsequente e pode ser modificada apenas por meio do processo formal de controle de mudanças. As baselines são fundamentais para a rastreabilidade, pois permitem relacionar requisitos, código, testes e documentação de forma coerente e auditável.</p>
+<p>A abordagem de ADRs proposta por Harmel-Law (2024) implementa um mecanismo de baseline de decisões arquiteturais. Cada ADR com status <em>Accepted</em> representa uma baseline de uma decisão específica. Quando uma decisão precisa ser revisada, um novo ADR é criado e o anterior recebe o status <em>Superseded</em>, mantendo o histórico íntegro. Conforme o autor explica: "ADRs are immutable. Once decided, they exist in the historical record of your architecture. [...] If you think about it, it would make no sense to go back in time and change your historical record" (HARMEL-LAW, 2024, p. 151). Esse princípio espelha diretamente a lógica das baselines na GCS clássica.</p>
+
+<div class="quadro-container">
+    <div class="quadro-titulo">Quadro 3 — Ciclo de vida de um ADR e analogia com GCS tradicional</div>
+    <table>
+        <thead><tr><th>Status do ADR</th><th>Descrição</th><th>Analogia em GCS</th></tr></thead>
+        <tbody>
+            <tr><td>Draft</td><td>Decisão em elaboração, sem efeito formal</td><td>Item de configuração em desenvolvimento</td></tr>
+            <tr><td>Proposed</td><td>Decisão proposta, aberta para consulta de conselho</td><td>Solicitação de mudança em análise</td></tr>
+            <tr><td>Accepted</td><td>Decisão formalmente aceita e implementada</td><td>Baseline aprovada</td></tr>
+            <tr><td>Superseded</td><td>Decisão substituída por um ADR posterior</td><td>Versão obsoleta com histórico preservado</td></tr>
+        </tbody>
+    </table>
+    <div class="quadro-fonte">Fonte: Adaptado de Harmel-Law (2024, p. 150-151).</div>
+</div>
+
+<h2 id="sec2.5">Tipos de Manutenção de Software</h2>
+<p>A classificação dos tipos de manutenção de software é amplamente aceita e baseia-se nos trabalhos de Swanson (1976), posteriormente incorporados à norma ISO/IEC 14764:2006. Quatro categorias principais são reconhecidas:</p>
+
+<h3>Manutenção Corretiva</h3>
+<p>A manutenção corretiva destina-se a corrigir defeitos descobertos após a entrega do software. Envolve a identificação da causa raiz do problema, a implementação da correção e a verificação de que a correção não introduziu novos defeitos (regressão). Sommerville (2019) estima que, em média, 20% dos esforços de manutenção sejam corretivos.</p>
+
+<h3>Manutenção Adaptativa</h3>
+<p>A manutenção adaptativa consiste em modificar o software para mantê-lo utilizável em um ambiente tecnológico em constante evolução: atualizações de sistema operacional, migração de plataforma de nuvem, mudanças em APIs de terceiros ou adaptações a novas regulamentações legais. Harmel-Law (2024) ilustra esse tipo de manutenção ao descrever como decisões arquiteturais precisam ser revisitadas quando o contexto tecnológico muda: "Later decisions [...] exert downward evolutionary forces on the decisions that underpin them" (HARMEL-LAW, 2024, p. 377).</p>
+
+<h3>Manutenção Perfectiva (Evolutiva)</h3>
+<p>A manutenção perfectiva, também denominada evolutiva, visa aperfeiçoar ou adicionar funcionalidades ao software para atender a novos requisitos dos usuários ou melhorar atributos de qualidade como desempenho, usabilidade e segurança. Representa a maior fatia dos esforços de manutenção, estimada entre 50% e 60% do total (PRESSMAN; MAXIM, 2021). Harmel-Law (2024) relaciona esse tipo de manutenção à evolução contínua das arquiteturas de software, descrevendo como sistemas bem gerenciados permitem que times "build, run, and evolve their systems" (HARMEL-LAW, 2024, p. 162) de forma sustentável.</p>
+
+<h3>Manutenção Preventiva</h3>
+<p>A manutenção preventiva consiste em modificar o software para detectar e corrigir falhas latentes antes que se tornem falhas efetivas. Inclui refatoração de código para reduzir dívida técnica, atualização de dependências com vulnerabilidades conhecidas e melhoria da cobertura de testes automatizados. Harmel-Law (2024) aborda esse conceito ao discutir a importância de decisões que removem acoplamentos desnecessários e simplificam a arquitetura, citando um caso real em que uma equipe precisou "refactoring of the workflow service to firm up usage patterns, making it explicitly easier to use this service to do the things it was good at, and harder or impossible to make it do things it was poor at" (HARMEL-LAW, 2024, p. 90).</p>
+
+<div class="quadro-container">
+    <div class="quadro-titulo">Quadro 4 — Resumo dos tipos de manutenção de software</div>
+    <table>
+        <thead><tr><th>Tipo</th><th>Objetivo</th><th>Proporção Estimada</th><th>Exemplo</th></tr></thead>
+        <tbody>
+            <tr><td>Corretiva</td><td>Corrigir defeitos</td><td>~20%</td><td>Bug de cálculo de imposto corrigido</td></tr>
+            <tr><td>Adaptativa</td><td>Adaptar ao novo ambiente</td><td>~25%</td><td>Migração de API de pagamento</td></tr>
+            <tr><td>Perfectiva/Evolutiva</td><td>Adicionar/melhorar funcionalidades</td><td>~50-60%</td><td>Novo módulo de relatórios</td></tr>
+            <tr><td>Preventiva</td><td>Evitar falhas futuras</td><td>~5%</td><td>Refatoração para reduzir dívida técnica</td></tr>
+        </tbody>
+    </table>
+    <div class="quadro-fonte">Fonte: Adaptado de Pressman e Maxim (2021, p. 532) e Sommerville (2019, p. 244).</div>
+</div>
+
+<h2 id="sec2.6">Boas Práticas de Organização de Repositórios</h2>
+<p>A organização de repositórios de código-fonte é um fator crítico para a produtividade das equipes e para a eficiência da GCS. As principais boas práticas incluem:</p>
+<ul>
+    <li><strong>Estrutura de Diretórios Clara:</strong> Separar código-fonte (<code>/src</code>), testes (<code>/test</code>), documentação (<code>/docs</code>) e scripts de infraestrutura (<code>/infra</code> ou <code>/deploy</code>).</li>
+    <li><strong>Arquivo README:</strong> Manter um arquivo <code>README.md</code> na raiz do projeto com instruções claras de configuração, execução e contribuição.</li>
+    <li><strong>Gitignore Efetivo:</strong> Utilizar arquivos <code>.gitignore</code> adequados à linguagem e ao framework para evitar o versionamento de arquivos binários compilados, logs e configurações locais do desenvolvedor.</li>
+    <li><strong>Monorepo vs. Multirepo:</strong> Avaliar a estratégia correta para a organização. Monorepos podem facilitar a padronização e refatorações atômicas, enquanto múltiplos repositórios oferecem maior isolamento e controle de acesso independente.</li>
+    <li><strong>Documentação como Código:</strong> Manter a documentação técnica relevante versionada no mesmo repositório do código-fonte, facilitando a atualização sincronizada.</li>
+</ul>
+
+<h2 id="sec2.7">Padronização de Commits e Branches</h2>
+<p>A padronização das mensagens de commit e da estratégia de branching é fundamental para a rastreabilidade e para a automação do processo de entrega contínua (CI/CD). O padrão <em>Conventional Commits</em> (<a href="https://www.conventionalcommits.org">https://www.conventionalcommits.org</a>) define uma convenção leve que especifica que cada mensagem de commit deve iniciar com um tipo (<code>feat</code>, <code>fix</code>, <code>docs</code>, <code>style</code>, <code>refactor</code>, <code>test</code>, <code>chore</code>), seguido de escopo opcional e descrição obrigatória. Essa padronização habilita a geração automática de changelogs e a determinação automatizada de versões semânticas.</p>
+<p>Para estratégias de branching, os modelos mais difundidos são o <em>Gitflow</em>, adequado a projetos com releases programados, e o <em>Trunk-Based Development</em>, adequado a equipes que praticam integração e entrega contínua. Harmel-Law (2024) menciona explicitamente o benefício da entrega baseada em tronco ao descrever que equipes que a adotam "could eliminate pull requests altogether and consequently improve on their lead time for changes and deployment frequency metrics" (HARMEL-LAW, 2024, p. 78), conectando diretamente a estratégia de branching às métricas de desempenho de entrega de software (DORA Metrics).</p>
+
+<h1 id="sec3">APLICAÇÃO PRÁTICA</h1>
+<p>Para ilustrar a aplicação dos conceitos apresentados, será analisado um projeto hipotético de desenvolvimento de um sistema de gestão acadêmica para uma instituição de ensino de médio porte. O sistema é composto por módulos de matrícula, gestão de disciplinas, lançamento de notas, geração de relatórios e integração com sistemas financeiros externos. A equipe é formada por oito desenvolvedores organizados em duas equipes de quatro, dois analistas de requisitos e um arquiteto de soluções.</p>
+
+<h2>Controle de Versão Aplicado</h2>
+<p>O projeto adota Git como VCS com repositório hospedado no GitHub. A estratégia de branching utilizada é o <em>Trunk-Based Development</em> com <em>feature flags</em>, conforme recomendado por Harmel-Law (2024) para equipes que almejam alta frequência de implantação. As branches de funcionalidade têm vida útil máxima de dois dias antes de serem integradas ao tronco principal, reduzindo os riscos de conflitos de merge e garantindo integração contínua real.</p>
+<p>Os tipos de manutenção que o sistema pode sofrer são variados: manutenção corretiva para correção de cálculos de médias; manutenção adaptativa quando o Ministério da Educação altera as normas de registro acadêmico; manutenção perfectiva para a adição de novos tipos de relatórios solicitados pelos gestores; e manutenção preventiva por meio de refatorações periódicas para reduzir a dívida técnica acumulada.</p>
+
+<h2>ADRs como Ferramenta de GCS</h2>
+<p>O arquiteto de soluções adota a prática de ADRs proposta por Harmel-Law (2024) para registrar as decisões arquiteturais significativas. Seguindo o modelo descrito no livro, cada ADR contém título, status, data, autor, decisão tomada, contexto, opções consideradas, consequências e registro do conselho recebido. Por exemplo, a decisão de adotar PostgreSQL como banco de dados principal foi registrada no ADR-001, com status <em>Accepted</em>, após consulta às equipes afetadas e a especialistas em banco de dados.</p>
+<p>Quando surgiu a necessidade de avaliar a migração para um banco de dados orientado a documentos para o módulo de relatórios, um novo ADR-007 foi iniciado com status <em>Draft</em>, seguindo o processo de conselho arquitetural. O ADR-001 permaneceu inalterado, preservando o histórico da decisão original. Após análise e consulta, optou-se por manter o PostgreSQL, e o ADR-007 foi aceito como decisão de não-migração, exemplificando que "deciding not to act than to put off even the idea of a decision" (HARMEL-LAW, 2024, p. 316) também é uma decisão válida e rastreável.</p>
+
+<h2>Riscos da Ausência de Gerência de Configuração</h2>
+<p>A ausência de GCS no projeto hipotético geraria riscos concretos e mensuráveis:</p>
+<ul>
+    <li><strong>Sobrescrita de Código:</strong> Desenvolvedores poderiam sobrescrever acidentalmente o trabalho uns dos outros ao enviar arquivos manualmente para um servidor compartilhado.</li>
+    <li><strong>Impossibilidade de Rollback:</strong> Na ocorrência de um defeito crítico em produção, a equipe não teria um mecanismo confiável para reverter o sistema ao último estado estável conhecido.</li>
+    <li><strong>Débito Técnico Invisível:</strong> Sem documentação de decisões (ADRs), o conhecimento sobre o porquê de certas escolhas de design se perderia com a saída de membros da equipe, tornando a manutenção futura mais lenta e arriscada.</li>
+    <li><strong>Paralisia na Entrega:</strong> Sem uma estratégia de branching leve, o processo de merge de código se tornaria um gargalo, impedindo entregas frequentes e seguras.</li>
+</ul>
+
+<h1 id="sec4">EXEMPLOS E ESTUDO DE CASO</h1>
+
+<h2>Estudo de Caso: Falha por Ausência de Controle de Versão</h2>
+<p>Em 2012, o banco Knight Capital Group sofreu prejuízos de aproximadamente 440 milhões de dólares em menos de uma hora devido a uma falha em seu sistema de negociação algorítmica. A investigação posterior revelou que um módulo de software legado havia sido reativado inadvertidamente durante um processo de atualização mal gerenciado. A ausência de um processo rigoroso de GCS — incluindo a falta de imutabilidade dos artefatos de build e a inexistência de procedimentos de rollback automatizados — contribuiu diretamente para a magnitude do desastre. O incidente exemplifica o conceito de Harmel-Law (2024, p. 22) sobre como sistemas complexos podem "tip out of control" quando os artefatos de configuração não são gerenciados adequadamente.</p>
+
+<h2>Estudo de Caso: Sucesso com Práticas de GCS — Implantação Contínua</h2>
+<p>A Amazon realiza, em média, dezenas de milhares de implantações de software por dia em seus sistemas de produção (FORSGREN; HUMBLE; KIM, 2018). Esse nível de frequência só é possível graças a práticas maduras de GCS: controle de versão rigoroso, testes automatizados em múltiplas camadas, pipelines de CI/CD com validações automatizadas e processos de rollback automatizados. Harmel-Law (2024, p. 36) menciona a Amazon no contexto do princípio <em>"build and run"</em>, descrevendo como o controle sobre o ciclo completo de entrega — do código à produção — é fundamental para a qualidade arquitetural.</p>
+<p>O ponto central desse estudo de caso é que a velocidade de entrega não compromete a qualidade quando a GCS está estruturada. Ao contrário, a GCS bem implementada é o que <em>habilita</em> a velocidade com segurança.</p>
+
+<h2>Estudo de Caso Fictício: Manutenção Mal Planejada</h2>
+<p>Considere o cenário de uma startup de comércio eletrônico que desenvolveu seu sistema de pagamentos sem documentação de decisões arquiteturais e sem um processo formal de GCS. Após dois anos, a empresa decide migrar do provedor de pagamentos original para um novo, motivada por melhores condições comerciais. A equipe de desenvolvimento, agora composta majoritariamente por membros diferentes dos fundadores, não encontra documentação sobre os motivos da escolha original do provedor nem sobre as integrações realizadas.</p>
+<p>O processo de migração, estimado inicialmente em três semanas, leva quatro meses. Sem rastreabilidade dos requisitos que motivaram integrações específicas, a equipe precisa fazer engenharia reversa do código legado. Sem ADRs, não há como saber se certas peculiaridades do código são <em>bugs</em> ou decisões intencionais. Sem um processo formal de GCS, cada tentativa de integração com o novo provedor é realizada diretamente no ambiente de produção, causando instabilidade para os usuários finais.</p>
+<p>Esse cenário ilustra como a ausência de GCS transforma uma manutenção adaptativa relativamente simples em uma operação de alto risco e custo elevado. Harmel-Law (2024, p. 364) descreve situações similares como resultado de <em>"inappropriate decision after inappropriate decision, all piled on top of one another"</em>, formando o que o autor denomina dívida de design (<em>design debt</em>).</p>
+
+<h2>Integração de ADRs com o Processo de Manutenção</h2>
+<p>Harmel-Law (2024) apresenta um exemplo concreto de manutenção perfectiva gerenciada por meio de ADRs ao descrever a refatoração de um serviço de fluxo de trabalho que havia se tornado um gargalo de entrega. O arquiteto identificou três padrões de uso distintos no serviço e propôs sua divisão em decisões menores e independentes, cada uma documentada em um ADR específico. O autor descreve que as decisões foram divididas em:</p>
+<ul>
+    <li><strong>ADR 1:</strong> Definição de um modelo canônico de dados para padronizar a comunicação entre os componentes.</li>
+    <li><strong>ADR 2:</strong> Separação do serviço monolítico em componentes menores e especializados.</li>
+    <li><strong>ADR 3:</strong> Definição de novas políticas de versionamento de API para os serviços refatorados.</li>
+</ul>
+<p>Essa fragmentação da manutenção em unidades menores, cada uma com seu próprio registro de decisão, exemplifica como a GCS — por meio dos ADRs — transforma atividades de manutenção complexas em processos gerenciáveis, rastreáveis e com menor risco de falha.</p>
+
+<h1 id="sec5">CONCLUSÃO</h1>
+<p>Este trabalho examinou os fundamentos e as práticas da Gerência de Configuração e da Manutenção de Software, demonstrando sua centralidade para a qualidade, sustentabilidade e evolução dos sistemas de software modernos. Por meio da integração entre a literatura clássica da engenharia de software — representada por Pressman e Maxim (2021) e Sommerville (2019) — e a perspectiva contemporânea oferecida por Harmel-Law (2024), foi possível construir uma visão abrangente e atualizada do tema.</p>
+<p>A análise revelou que a GCS e a manutenção de software são processos complementares e interdependentes. A GCS fornece a infraestrutura de controle que torna a manutenção segura, rastreável e eficiente; enquanto os processos de manutenção, por sua vez, validam e aperfeiçoam continuamente a eficácia da GCS. Sem GCS adequada, cada atividade de manutenção — seja corretiva, adaptativa, perfectiva ou preventiva — torna-se uma operação de risco elevado, susceptível a regressões, perda de histórico e acúmulo acelerado de dívida técnica.</p>
+<p>A contribuição mais relevante de Harmel-Law (2024) para este trabalho reside na proposta dos Registros de Decisão Arquitetural (ADRs) como extensão natural da GCS tradicional. Os ADRs aplicam os princípios fundamentais da GCS — identificação, controle, contabilidade de status e auditoria — às decisões arquiteturais, que historicamente eram gerenciadas de forma implícita e não documentada. O ciclo de vida dos ADRs (<em>Draft → Proposed → Accepted → Superseded</em>) espelha diretamente o conceito de baseline da GCS clássica, enquanto o <em>Architecture Advice Process</em> redesenha o gerenciamento de mudanças arquiteturais de forma descentralizada, eliminando os gargalos típicos dos modelos tradicionais sem abrir mão do controle e da rastreabilidade.</p>
+<p>Os estudos de caso analisados confirmaram empiricamente as consequências da ausência de GCS — evidenciadas pelo desastre do Knight Capital Group e pelo cenário fictício da startup de e-commerce — e os benefícios concretos de práticas maduras, como a capacidade da Amazon de realizar dezenas de milhares de implantações diárias com elevado nível de qualidade e disponibilidade.</p>
+<p>Para o mercado de trabalho na área de tecnologia, os conceitos abordados neste trabalho são essenciais. Profissionais que dominam GCS e manutenção de software estão preparados para trabalhar em times que entregam valor de forma contínua, segura e rastreável — uma expectativa fundamental nas organizações que adotam práticas DevOps, entrega contínua e arquiteturas de microsserviços. A habilidade de escrever boas mensagens de commit, organizar repositórios de forma coerente, conduzir revisões de código eficazes e documentar decisões arquiteturais em ADRs são diferenciais competitivos significativos para qualquer desenvolvedor ou arquiteto de software.</p>
+<p>Por fim, ressalta-se que a GCS e a manutenção de software não são atividades burocráticas impostas sobre o processo de desenvolvimento, mas sim habilitadoras fundamentais da agilidade, da qualidade e da longevidade dos sistemas de software. Como sintetiza Harmel-Law (2024, p. 117), boas práticas de registro e controle permitem que a organização aprenda com seu próprio histórico, tornando cada decisão futura mais informada e cada processo de manutenção mais eficiente.</p>
+
+<!-- REFERÊNCIAS -->
+<div class="referencias">
+    <h2 id="ref" class="no-number">REFERÊNCIAS</h2>
+    <div class="ref-item">FORSGREN, Nicole; HUMBLE, Jez; KIM, Gene. <strong>Accelerate</strong>: the science of lean software and devops: building and scaling high performing technology organizations. Portland: IT Revolution Press, 2018.</div>
+    <div class="ref-item">HARMEL-LAW, Andrew. <strong>Facilitating software architecture</strong>: empowering teams to make architectural decisions. Foreword by Sarah Wells. Sebastopol: O'Reilly Media, 2024.</div>
+    <div class="ref-item">IEEE. <strong>IEEE Std 828-2012</strong>: IEEE Standard for Configuration Management in Systems and Software Engineering. New York: IEEE, 2012.</div>
+    <div class="ref-item">ISO/IEC. <strong>ISO/IEC 14764:2006</strong>: Software Engineering — Software Life Cycle Processes — Maintenance. Geneva: ISO, 2006.</div>
+    <div class="ref-item">PRESSMAN, Roger S.; MAXIM, Bruce R. <strong>Engenharia de software</strong>: uma abordagem profissional. 9. ed. Porto Alegre: AMGH, 2021.</div>
+    <div class="ref-item">SOMMERVILLE, Ian. <strong>Engenharia de software</strong>. 10. ed. São Paulo: Pearson Education do Brasil, 2019.</div>
+    <div class="ref-item">SWANSON, E. Burton. The dimensions of maintenance. In: INTERNATIONAL CONFERENCE ON SOFTWARE ENGINEERING, 2., 1976, San Francisco. <strong>Proceedings</strong> [...]. San Francisco: IEEE Computer Society Press, 1976. p. 492-497.</div>
+</div>
+
+</body>
+</html>
