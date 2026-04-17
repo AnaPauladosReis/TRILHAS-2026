@@ -6,6 +6,8 @@
 
 # **Atividade EAD — Gerência de Configuração e Manutenção de Software**
 
+# **ANA PAULA DOS REIS**
+
 **Disciplina:** Gerência de Configuração e Manutenção de Software  
 **Professores:** Emerson Amancio e Tiago Ricaldi  
 
@@ -16,22 +18,22 @@
 
 ## **SUMÁRIO**
 
-1. INTRODUÇÃO AO TEMA 3  
- 1.1 Conceito de Gerência de Configuração de Software 3  
- 1.2 Conceito de Manutenção de Software 3  
- 1.3 Importância no Ciclo de Vida do Software 4  
-2. PRINCIPAIS ÁREAS ENVOLVIDAS 4  
- 2.1 Controle de Versão e Versionamento de Software 4  
- 2.2 Gerenciamento de Mudanças 5  
- 2.3 Controle de Artefatos 6  
- 2.4 Baselines e Rastreabilidade 6  
- 2.5 Tipos de Manutenção de Software 7  
- 2.6 Boas Práticas de Organização de Repositórios 8  
- 2.7 Padronização de Commits e Branches 9  
-3. APLICAÇÃO PRÁTICA 9  
-4. EXEMPLOS E ESTUDO DE CASO 11  
-5. CONCLUSÃO 13  
-REFERÊNCIAS 14  
+1. INTRODUÇÃO AO TEMA  
+ 1.1 Conceito de Gerência de Configuração de Software 
+ 1.2 Conceito de Manutenção de Software  
+ 1.3 Importância no Ciclo de Vida do Software 
+2. PRINCIPAIS ÁREAS ENVOLVIDAS 
+ 2.1 Controle de Versão e Versionamento de Software 
+ 2.2 Gerenciamento de Mudanças 
+ 2.3 Controle de Artefatos 
+ 2.4 Baselines e Rastreabilidade 
+ 2.5 Tipos de Manutenção de Software 
+ 2.6 Boas Práticas de Organização de Repositórios   
+ 2.7 Padronização de Commits e Branches  
+3. APLICAÇÃO PRÁTICA 
+4. EXEMPLOS E ESTUDO DE CASO 
+5. CONCLUSÃO 
+REFERÊNCIAS 
 
 ---
 
