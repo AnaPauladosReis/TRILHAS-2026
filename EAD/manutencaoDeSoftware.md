@@ -227,7 +227,7 @@ Esse cenário ilustra como a ausência de GCS transforma uma manutenção adapta
 
 Harmel-Law (2024) apresenta um exemplo concreto de manutenção perfectiva gerenciada por meio de ADRs ao descrever a refatoração de um serviço de fluxo de trabalho que havia se tornado um gargalo de entrega. O arquiteto identificou três padrões de uso distintos no serviço e propôs sua divisão em decisões menores e independentes, cada uma documentada em um ADR específico. O autor descreve que as decisões foram divididas em:
 
-```markdown
+
 - **ADR 1:** Definição de um modelo canônico de dados para padronizar a comunicação entre os componentes.
 - **ADR 2:** Separação do serviço monolítico em componentes menores e especializados.
 - **ADR 3:** Definição de novas políticas de versionamento de API para os serviços refatorados.
