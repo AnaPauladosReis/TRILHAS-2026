@@ -275,5 +275,5 @@ function card(s, { x, y, w, h, title, text, color }) {
 pres.writeFile({
   fileName: path.join(__dirname, "normalizacao_bd.pptx")
 })
-.then(() => console.log("✅ PPT top gerado"))
+.then(() => console.log("✅ Normalização"))
 .catch(err => console.error(err));
