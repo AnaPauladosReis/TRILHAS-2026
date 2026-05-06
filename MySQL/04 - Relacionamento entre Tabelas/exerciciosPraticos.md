@@ -35,7 +35,7 @@
 - [x] Permite relacionamento entre tabelas  
 - [x] Evita dados órfãos  
 
-==Sem isso, o banco perde consistência==
+Sem isso, o banco perde consistência
 
 ---
 
