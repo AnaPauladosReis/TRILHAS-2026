@@ -80,6 +80,8 @@ Sem isso, o banco perde consistência
 
     SELECT * FROM pedidos
     WHERE id_cliente = 1;
+	
+Resultado: pedidos de IDs 1 e 2 (ambos da cliente Ana)
 
 ---
 
